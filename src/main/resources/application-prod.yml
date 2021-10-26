@@ -1,0 +1,23 @@
+spring:
+  config:
+    import: file:env.properties
+  thymeleaf:
+    mode: HTML
+    cache: false
+  data:
+    mongodb:
+      uri: ${PROD_MONGO_DB_URL}
+
+logging:
+  level:
+    root: info
+    com.kangmin: debug
+  file:
+    name: log/app-mongodb-blog-prod.log
+
+server:
+  port: 8081
+
+application:
+  env:
+    node: PROD

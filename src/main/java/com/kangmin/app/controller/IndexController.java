@@ -1,4 +1,4 @@
-package com.kangmin.blog.controller;
+package com.kangmin.app.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
