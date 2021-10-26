@@ -1,3 +1,26 @@
+# Gradle
+.gradle
+HELP.md
+build/
+log/
+**/build/
+!src/**/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# IntelliJ
+.idea
+
 # Compiled class file
 *.class
 
