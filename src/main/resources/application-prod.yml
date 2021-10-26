@@ -6,7 +6,7 @@ spring:
     cache: false
   data:
     mongodb:
-      uri: ${PROD_MONGO_DB_URL}
+      uri: mongodb+srv://${PROD_MONGO_DB_USER}:${PROD_MONGO_DB_PASSWORD}@${PROD_MONGO_DB_URL}/${PROD_MONGO_DB_NAME}?retryWrites=true&w=majority
 
 logging:
   level:
@@ -14,9 +14,6 @@ logging:
     com.kangmin: debug
   file:
     name: log/app-mongodb-blog-prod.log
-
-server:
-  port: 8081
 
 application:
   env:
