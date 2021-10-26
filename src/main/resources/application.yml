@@ -1,6 +1,9 @@
 # common properties (shared by dev and prod)
 # current default active profiles: dev
 spring:
+  config:
+    use-legacy-processing: true
+    import: file:env.properties
   thymeleaf:
     mode: HTML
     cache: false
