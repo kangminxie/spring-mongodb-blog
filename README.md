@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/mountkingx/spring-mongodb-blog/tree/main.svg?style=svg)](https://circleci.com/gh/mountkingx/spring-mongodb-blog/tree/main)
+
 # spring-mongodb-blog
 Personal development practice
 
@@ -25,4 +27,8 @@ gradle 7.2 is recommended
 aws | us-east-1 (cluster-2021-oct-26)
 
 ### First Commit
+- manually added checkstyle configuration
 - visit: http://localhost:8080/api/health
+
+### CircleCI Commit
+- incorporated circleci support (.circleci/config)
