@@ -1,4 +1,4 @@
-package com.kangmin.app.config;
+package com.kangmin.app.config.database;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
