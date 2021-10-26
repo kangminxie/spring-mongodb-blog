@@ -1,0 +1,18 @@
+spring:
+  thymeleaf:
+    mode: HTML
+    cache: false
+  data:
+    mongodb:
+      uri: mongodb+srv://${PROD_MONGO_DB_USER}:${PROD_MONGO_DB_PASSWORD}@${PROD_MONGO_DB_URL}/${PROD_MONGO_DB_NAME}?retryWrites=true&w=majority
+
+logging:
+  level:
+    root: info
+    com.kangmin: debug
+  file:
+    name: log/app-mongodb-blog-prod.log
+
+application:
+  env:
+    node: PROD
