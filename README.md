@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/mountkingx/spring-mvc-blog/tree/main.svg?style=svg)](https://circleci.com/gh/mountkingx/spring-mongodb-blog/tree/main)
+[![CircleCI](https://circleci.com/gh/mountkingx/spring-mongodb-blog/tree/main.svg?style=svg)](https://circleci.com/gh/mountkingx/spring-mongodb-blog/tree/main)
 
 # spring-mongodb-blog
 Personal development practice
