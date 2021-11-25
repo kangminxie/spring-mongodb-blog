@@ -25,7 +25,7 @@ public interface AccountMongoDao extends MongoRepository<Account, String> {
     // MongoRepository<T, ID> extends PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T>
     // PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID>
     //            methods provided by CrudRepository<T, ID>:
-    //            T = Blog
+    //            T = Account
     //            ID = Long
     //
     //            CREATE:
