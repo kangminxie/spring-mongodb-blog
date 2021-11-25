@@ -32,3 +32,14 @@ aws | us-east-1 (cluster-2021-oct-26)
 
 ### CircleCI Commit
 - incorporated circleci support (.circleci/config)
+
+### Dao Layer Testing
+
+spring-boot-starter-data-mongodb enabled Spring support for MongoDB:
+```xml
+<dependency>
+    <groupId>de.flapdoodle.embed</groupId>
+    <artifactId>de.flapdoodle.embed.mongo</artifactId>
+    <scope>test</scope>
+</dependency>
+```
