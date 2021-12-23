@@ -15,9 +15,7 @@ import static com.kangmin.app.model.security.WebUserPermission.COURSE_WRITE;
 
 public enum WebUserRole {
 
-    UNKNOWN(Sets.newHashSet(
-            // empty
-    )),
+    UNKNOWN(Sets.newHashSet()),
 
     NORMAL(Sets.newHashSet(
             COURSE_READ,

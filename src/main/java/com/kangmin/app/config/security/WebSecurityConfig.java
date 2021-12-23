@@ -28,6 +28,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.swing.*;
 import java.util.Arrays;
 
 import static com.kangmin.app.model.security.WebUserPermission.ACCOUNT_READ;
@@ -175,12 +176,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new OAuth2AuthenticationFailureHandler(httpCookieOAuth2AuthorizationRequestRepository);
     }
 
-//     "If you are using Spring MVC’s CORS support, you can omit specifying the CorsConfigurationSource
-//     and Spring Security will leverage the CORS configuration provided to Spring MVC."
-//     https://docs.spring.io/spring-security/site/docs/current/reference/html5/
-//     https://spring.io/blog/2015/06/08/cors-support-in-spring-framework#filter-based-cors-support
-//     Therefore, I have implemented this part in WebMvcConfig
-
+    /*
+        "If you are using Spring MVC’s CORS support, you can omit specifying the CorsConfigurationSource
+        and Spring Security will leverage the CORS configuration provided to javax.swing.Spring MVC."
+        https://docs.spring.io/spring-security/site/docs/current/reference/html5/
+        https://spring.io/blog/2015/06/08/cors-support-in-spring-framework#filter-based-cors-support
+        Therefore, I have implemented this part in WebMvcConfig
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();

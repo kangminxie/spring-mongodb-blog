@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<Account> getAccountByUsername(final String username) {
-        Optional<Account> usernameOpt = accountDao.findByUsername(username);
+        final Optional<Account> usernameOpt = accountDao.findByUsername(username);
         if (usernameOpt.isPresent()) {
             return usernameOpt;
         }

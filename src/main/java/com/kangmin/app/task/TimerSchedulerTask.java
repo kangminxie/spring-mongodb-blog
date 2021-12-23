@@ -13,10 +13,10 @@ public class TimerSchedulerTask {
     private static final int TIME_REPORT_INIT_DELAY = 15 * 1000;  // 15 seconds
     private static final int TIME_REPORT_FREQUENCY = 60 * 1000;  // 60 seconds = 1 minute
 
-//    @Scheduled(cron = "*/15 * * * * ?")
-//    private void processSecondsTask() {
-//        System.out.println(">>> This is scheduler task running  " + (count++));
-//    }
+    //    @Scheduled(cron = "*/15 * * * * ?")
+    //    private void processSecondsTask() {
+    //        System.out.println(">>> This is scheduler task running  " + (count++));
+    //    }
 
     @Scheduled(initialDelay = TIME_REPORT_INIT_DELAY, fixedRate = TIME_REPORT_FREQUENCY)
     public void reportCurrentTimePerFifteenSeconds() {
