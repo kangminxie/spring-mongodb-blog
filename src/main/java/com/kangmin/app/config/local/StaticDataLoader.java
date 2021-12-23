@@ -1,5 +1,6 @@
-package com.kangmin.app.config.dev;
+package com.kangmin.app.config.local;
 
+import com.kangmin.app.config.oauth2.model.AuthProvider;
 import com.kangmin.app.dao.AccountMongoDao;
 import com.kangmin.app.dao.BlogMongoDao;
 import com.kangmin.app.dao.CategoryMongoDao;
@@ -9,6 +10,7 @@ import com.kangmin.app.model.Blog;
 import com.kangmin.app.model.Category;
 import com.kangmin.app.model.Tag;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -21,41 +23,64 @@ public class StaticDataLoader implements CommandLineRunner {
     private final BlogMongoDao blogMongoDao;
     private final CategoryMongoDao categoryMongoDao;
     private final TagMongoDao tagMongoDao;
+    private final PasswordEncoder passwordEncoder;
 
     public StaticDataLoader(
         final AccountMongoDao accountMongoDao,
         final BlogMongoDao blogMongoDao,
         final CategoryMongoDao categoryMongoDao,
-        final TagMongoDao tagMongoDao
+        final TagMongoDao tagMongoDao,
+        final PasswordEncoder passwordEncoder
     ) {
         this.accountMongoDao = accountMongoDao;
         this.blogMongoDao = blogMongoDao;
         this.categoryMongoDao = categoryMongoDao;
         this.tagMongoDao = tagMongoDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private void createDevAccounts() {
         if (accountMongoDao.findAll().isEmpty()) {
-            final Account sa = new Account(
-                "id-0000",
-                "sa",
-                "Super Admin1",
-                "sa@test.com",
-                "password"
-            );
+//            final Account sa = new Account(
+//                "id-0000",
+//                "sa",
+//                "Super Admin1",
+//                "sa@test.com",
+//                "password",
+//                "SUPER_ADMIN"
+//            );
+            final Account sa = Account.builder()
+                .id("id-0000")
+                .username("sa")
+                .password(passwordEncoder.encode("password"))
+                .email("sa@test.com")
+                .displayName("Super Admin1")
+                .role("SUPER_ADMIN")
+                .createdTimestamp(System.currentTimeMillis())
+                .providerId("")
+                .provider(AuthProvider.LOCAL)
+                .build();
             final Account dev = Account.builder()
                 .id("id-0001")
                 .username("dev")
-                .password("password")
+                .password(passwordEncoder.encode("password"))
                 .email("dev@test.com")
                 .displayName("Developer Admin1")
+                .role("ADMIN")
+                .createdTimestamp(System.currentTimeMillis())
+                .providerId("")
+                .provider(AuthProvider.LOCAL)
                 .build();
             final Account normal = Account.builder()
                 .id("id-0002")
                 .username("normal")
-                .password("password")
+                .password(passwordEncoder.encode("password"))
                 .email("normal@test.com")
                 .displayName("Normal User1")
+                .role("NORMAL")
+                .createdTimestamp(System.currentTimeMillis())
+                .providerId("")
+                .provider(AuthProvider.LOCAL)
                 .build();
             accountMongoDao.saveAll(Arrays.asList(sa, dev, normal));
         }
