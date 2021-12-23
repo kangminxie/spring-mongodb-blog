@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'checkstyle'
+	id 'com.github.node-gradle.node' version '2.2.3'
 }
 
 group = 'com.kangmin'
@@ -23,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -31,6 +33,14 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
 	implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.10'
+
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.1'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.1'
+
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-client
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.1'
 
 	// https://mvnrepository.com/artifact/com.google.guava/guava
 	implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
@@ -43,12 +53,43 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-csv
 	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.12.3'
 
+	// https://mvnrepository.com/artifact/javax.validation/validation-api
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
 	// https://mvnrepository.com/artifact/org.yaml/snakeyaml
 	implementation group: 'org.yaml', name: 'snakeyaml', version: '1.29'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+// https://blog.indrek.io/articles/serving-react-apps-from-spring-boot/
+task appNpmInstall(type: NpmTask) {
+	description = "Installs all dependencies from package.json"
+	workingDir = file("${project.projectDir}/src/main/frontend")
+	args = ["install"]
+}
+
+task appNpmBuild(type: NpmTask) {
+	description = "Builds production version of the frontend webapp"
+	workingDir = file("${project.projectDir}/src/main/frontend")
+	args = ["run", "build"]
+}
+
+appNpmBuild.dependsOn appNpmInstall
+// compileJava.dependsOn appNpmBuild
+
+node {
+	version = '13.8.0'
+	npmVersion = '6.14.8'
+	download = true
+
+	// Set the work directory for unpacking node
+	workDir = file("${project.buildDir}/nodejs")
+
+	// Set the work directory for NPM
+	npmWorkDir = file("${project.buildDir}/npm")
 }
 
 task checkstyle(type: Checkstyle) {

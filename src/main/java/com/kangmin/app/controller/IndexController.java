@@ -3,20 +3,23 @@ package com.kangmin.app.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
-    @GetMapping("")
-    @ResponseBody
-    public String index(final HttpServletRequest request) {
-        LOGGER.info("index page visited from " + request.getRemoteUser());
-        return "Will be the index page!";
+    @RequestMapping(value = "/oauth2/redirect")
+    public String oauth2Redirect() {
+        LOGGER.info("ForwardingController `/oauth2/redirect` path visited and got redirected to /");
+        return "forward:/";
+    }
+
+    @RequestMapping(value = "/**/{path:[^.]*}")
+    public String errorRedirect(@PathVariable final String path) {
+        LOGGER.error("ForwardingController *** /error path visited with path=" + path);
+        return "forward:/";
     }
 }

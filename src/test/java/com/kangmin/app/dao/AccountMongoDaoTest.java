@@ -20,7 +20,7 @@ public class AccountMongoDaoTest {
     private AccountMongoDao accountMongoDao;
 
     @Test
-    void TestFindByUsername() {
+    void testFindByUsername() {
         final String testUsername = "testUser2021-10-26";
         final Account test1 = Account.builder()
             .id("id-test-001")
