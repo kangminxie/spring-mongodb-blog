@@ -1,7 +1,6 @@
 package com.kangmin.app.controller.rest;
 
 import com.kangmin.app.dao.AccountMongoDao;
-import com.kangmin.app.dao.BlogMongoDao;
 import com.kangmin.app.dao.CategoryMongoDao;
 import com.kangmin.app.dao.TagMongoDao;
 import com.kangmin.app.model.Account;
@@ -9,6 +8,7 @@ import com.kangmin.app.model.Blog;
 import com.kangmin.app.model.Category;
 import com.kangmin.app.model.Tag;
 import com.kangmin.app.model.payload.CreateBlogRequest;
+import com.kangmin.app.service.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,20 +36,20 @@ public class BlogController {
     private static final Logger LOG = LoggerFactory.getLogger(BlogController.class);
     private static final int DEFAULT_HOME_PAGE_SIZE = 2;
 
+    private final BlogService blogService;
     private final AccountMongoDao accountMongoDao;
-    private final BlogMongoDao blogMongoDao;
     private final CategoryMongoDao categoryMongoDao;
     private final TagMongoDao tagMongoDao;
 
     @Autowired
     public BlogController(
+        final BlogService blogService,
         final AccountMongoDao accountMongoDao,
-        final BlogMongoDao blogMongoDao,
         final CategoryMongoDao categoryMongoDao,
         final TagMongoDao tagMongoDao
     ) {
+        this.blogService = blogService;
         this.accountMongoDao = accountMongoDao;
-        this.blogMongoDao = blogMongoDao;
         this.categoryMongoDao = categoryMongoDao;
         this.tagMongoDao = tagMongoDao;
     }
@@ -54,32 +57,29 @@ public class BlogController {
     // == Blog ==
 
     // http://localhost:8080/api/v1/blogs?query=abcd&sort=id,asc
-    @RequestMapping({""})
-    public Page<Blog> showBlogsByQuery(
+    @GetMapping({""})
+    public ResponseEntity<Page<Blog>> showBlogsByQuery(
         final @PageableDefault(
             size = DEFAULT_HOME_PAGE_SIZE,
             sort = {"id"},
             direction = Sort.Direction.DESC
         ) Pageable pageable,
-        final @RequestParam(value = "query", required = false) String query
+        final @RequestParam(value = "query", required = false, defaultValue = "") String query
     ) {
         LOG.debug("BlogController.topBlogsPage is visited with query={} and pageable={}", query, pageable);
-        return blogMongoDao.findByContentOrTitleOrCategoryQuery(query, pageable);
+        return new ResponseEntity<>(blogService.findPagedWithQuery(query, pageable), HttpStatus.OK);
     }
 
     // == admin purpose ==
-    @RequestMapping({"/all"})
-    public List<Blog> showAllBlogs(
-        final @RequestParam(value = "query", required = false) String query
+    @GetMapping({"/all"})
+    public ResponseEntity<List<Blog>> showAllBlogs(
+        final @RequestParam(value = "query", required = false, defaultValue = "") String query
     ) {
-        if (query == null || query.isEmpty()) {
-            return blogMongoDao.findAll();
-        }
-        return blogMongoDao.findByContentOrTitleOrCategoryQuery(query);
+        return new ResponseEntity<>(blogService.findAllByQuery(query), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public Blog createOneBlog(final @RequestBody CreateBlogRequest request) {
+    public ResponseEntity<Blog> createOneBlog(final @RequestBody CreateBlogRequest request) {
         final String username = "sa";
         final Account account = accountMongoDao.findByUsername(username).orElse(null);
         final String accountId = account == null ? "id-0000" : account.getId();
@@ -95,16 +95,22 @@ public class BlogController {
             .category(category)
             .tags(tags)
             .build();
-        return blogMongoDao.save(blog);
+        return new ResponseEntity<>(blogService.save(blog), HttpStatus.CREATED);
     }
 
-    @RequestMapping("/{id}")
-    public Blog showSingleBlog(@PathVariable final String id) {
-        return blogMongoDao.findById(id).orElse(null);
+    @GetMapping("/{id}")
+    public ResponseEntity<Blog> showSingleBlog(@PathVariable final String id) {
+        return new ResponseEntity<>(
+            blogService.findById(id).orElse(null),
+            HttpStatus.OK
+        );
     }
 
-    @RequestMapping("/account/{accountId}")
-    public List<Blog> showBlogsForAccount(@PathVariable final String accountId) {
-        return blogMongoDao.findByAccountId(accountId);
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<Blog>> showBlogsForAccount(@PathVariable final String accountId) {
+        return new ResponseEntity<>(
+            blogService.findByAccountId(accountId),
+            HttpStatus.OK
+        );
     }
 }

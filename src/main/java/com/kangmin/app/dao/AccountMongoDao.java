@@ -15,7 +15,13 @@ public interface AccountMongoDao extends MongoRepository<Account, String> {
 
     Optional<Account> findByUsername(@Param("username") String username);
 
+    Optional<Account> findByEmail(@Param("email") String email);
+
     List<Account> findByDisplayName(@Param("displayName") String displayName);
+
+    boolean existsByUsername(final String username);
+
+    boolean existsByEmail(final String email);
 
     // Page<Account> findAll(Pageable pageable);
 
