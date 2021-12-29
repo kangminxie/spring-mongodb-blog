@@ -43,3 +43,8 @@ spring-boot-starter-data-mongodb enabled Spring support for MongoDB:
     <scope>test</scope>
 </dependency>
 ```
+
+### Info
+- https://app.circleci.com/settings/project/github/mountkingx/spring-mongodb-blog
+- https://dashboard.heroku.com/apps/afternoon-shore-94848
+- https://afternoon-shore-94848.herokuapp.com/
