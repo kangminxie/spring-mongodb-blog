@@ -6,7 +6,7 @@ Personal development practice
 ### Project Initialization
 
 Generated from https://start.spring.io/
-- spring boot 2.4.12
+- spring boot 2.5.6
 - gradle
 - java
 - jar
