@@ -82,7 +82,7 @@ task copyFrontend(type: Copy) {
 
 appNpmBuild.dependsOn appNpmInstall
 copyFrontend.dependsOn appNpmBuild
-// compileJava.dependsOn copyFrontend
+compileJava.dependsOn copyFrontend
 
 node {
 	version = '13.8.0'
