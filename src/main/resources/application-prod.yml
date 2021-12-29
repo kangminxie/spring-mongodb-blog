@@ -4,7 +4,7 @@ spring:
     cache: false
   data:
     mongodb:
-      uri: mongodb+srv://${PROD_MONGO_DB_USER}:${PROD_MONGO_DB_PASSWORD}@${PROD_MONGO_DB_URL}/${PROD_MONGO_DB_NAME}?retryWrites=true&w=majority
+      uri: ${SPRING_DATA_MONGODB_URI}
 
 logging:
   level:
