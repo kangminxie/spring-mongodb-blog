@@ -8,7 +8,7 @@ plugins {
 
 group = 'com.kangmin'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
 	compileOnly {
@@ -108,10 +108,4 @@ checkstyleMain {
 
 checkstyleTest {
 	source ='src/test/java'
-}
-
-jar {
-	manifest {
-		attributes 'Main-Class': 'com.kangmin.app.BlogApplication'
-	}
 }
