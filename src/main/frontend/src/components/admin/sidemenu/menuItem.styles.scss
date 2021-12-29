@@ -1,0 +1,43 @@
+@import 'src/styles/sass/partials/color';
+
+.menu-item {
+  a {
+    display: block;
+    text-decoration: none;
+    padding: 15px 30px;
+    color: $menu_item_a_color;
+    font-weight: 300;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: $menu_item_a_hover_color;
+      border-left: 5px solid $menu_item_a_active_border_color;
+      padding: 15px 30px 15px 25px;
+      text-decoration: none;
+      color: $menu_item_a_color;
+      font-weight: 500;
+    }
+
+    .fa,
+    .fs {
+      color: $fa_color;
+      font-size: 1.4rem;
+      margin-right: 0.8rem;
+      display: inline-block;
+      width: 30px;
+      position: relative;
+      top: 2px;
+    }
+
+    &.active {
+      background: $menu_item_a_active_bg_color;
+      border-left: 5px solid $menu_item_a_active_border_color;
+      padding: 15px 30px 15px 25px;
+
+      .fa,
+      .fs {
+        color: $fa_active_color;
+      }
+    }
+  }
+}

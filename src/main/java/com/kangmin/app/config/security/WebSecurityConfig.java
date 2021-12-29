@@ -28,7 +28,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.swing.*;
 import java.util.Arrays;
 
 import static com.kangmin.app.model.security.WebUserPermission.ACCOUNT_READ;
@@ -52,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtProvider jwtProvider;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-    private final OAuth2UserService oAuth2UserService;
+    private final OAuth2UserService oauth2Userservice;
 
     public WebSecurityConfig(
         final PasswordEncoder passwordEncoder,
@@ -60,14 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         final JwtProvider jwtProvider,
         final JwtAuthenticationEntryPoint unauthorizedHandler,
         final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository,
-        final OAuth2UserService oAuth2UserService
+        final OAuth2UserService oauth2Userservice
     ) {
         this.passwordEncoder = passwordEncoder;
         this.webUserDetailsService = webUserDetailsService;
         this.jwtProvider = jwtProvider;
         this.unauthorizedHandler = unauthorizedHandler;
         this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
-        this.oAuth2UserService = oAuth2UserService;
+        this.oauth2Userservice = oauth2Userservice;
     }
 
     @Override
@@ -86,20 +85,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/",
+                "/index",
+                "/home",
+                "/about",
+                "/contact",
+                "/todo",
                 "/favicon.ico",
+                "/manifest.json",
+                "/logo**",
+                "/logo192.png",
                 "/static/**",
                 "/resources/*",
                 "/error", "/error/",
-                "/index",
-                "/about",
-                "/contact",
                 "/auth/login", "/api/auth/login",
                 "/auth/register", "/api/auth/register",
                 "/oauth/*",
                 "/h2-console",
                 "/h2-console/*",
-                "/oauth2/authorize/*",
-                "/devTest")
+                "/oauth2/authorize/*"
+            )
             .permitAll()
 
             // debug
@@ -125,10 +129,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .baseUri("/oauth2/callback/*")
             .and()
             .userInfoEndpoint()
-            .userService(oAuth2UserService)
+            .userService(oauth2Userservice)
             .and()
-            .successHandler(oAuth2AuthenticationSuccessHandlerBean())
-            .failureHandler(oAuth2AuthenticationFailureHandlerBean())
+            .successHandler(oauth2AuthenticationSuccessHandlerBean())
+            .failureHandler(oauth2AuthenticationFailureHandlerBean())
             // jwt
             .and()
             .addFilterBefore(jwtTokenVerificationFilterBean(), UsernamePasswordAuthenticationFilter.class)
@@ -167,12 +171,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // == OAuth2 ==
 
     @Bean
-    public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandlerBean() {
+    public OAuth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandlerBean() {
         return new OAuth2AuthenticationSuccessHandler(jwtProvider, httpCookieOAuth2AuthorizationRequestRepository);
     }
 
     @Bean
-    public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandlerBean() {
+    public OAuth2AuthenticationFailureHandler oauth2AuthenticationFailureHandlerBean() {
         return new OAuth2AuthenticationFailureHandler(httpCookieOAuth2AuthorizationRequestRepository);
     }
 

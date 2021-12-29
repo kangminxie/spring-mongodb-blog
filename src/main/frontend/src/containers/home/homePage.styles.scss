@@ -1,0 +1,23 @@
+@import '../../styles/sass/v1Assets';
+
+#home-page {
+  min-height: 68vh;
+
+  .home-header {
+    @include app-common-header;
+    display: block;
+    background-color: antiquewhite;
+    text-align: center !important;
+  }
+
+  .home-content {
+    text-align: center;
+    padding: rem(16) rem(32);
+    background-color: aliceblue;
+
+    .home-table-wrapper {
+      margin: rem(20) rem(32);
+      background-color: white;
+    }
+  }
+}

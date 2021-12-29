@@ -1,0 +1,25 @@
+@import '../../styles/sass/v1Assets';
+
+#landing-page {
+  min-height: 600px;
+  padding: rem(0);
+
+  // override bootstrap4's default style
+  .jumbotron {
+    padding: rem(24) rem(40);
+    margin-bottom: rem(12);
+  }
+
+  .para-content {
+    padding: rem(8) 0;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  .landing-carousel {
+    margin-bottom: rem(24);
+  }
+}

@@ -1,0 +1,18 @@
+.content-section {
+  .content-section--header {
+    padding: 8px 16px;
+    text-align: center;
+    background-color: lightyellow;
+  }
+
+  .content-section--main {
+    padding: 16px;
+    min-height: 200px;
+    background-color: aliceblue;
+
+    .users-table-wrapper {
+      margin: 24px 60px;
+      // background-color: aliceblue;
+    }
+  }
+}

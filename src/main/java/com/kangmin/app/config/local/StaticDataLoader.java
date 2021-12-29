@@ -41,14 +41,6 @@ public class StaticDataLoader implements CommandLineRunner {
 
     private void createDevAccounts() {
         if (accountMongoDao.findAll().isEmpty()) {
-//            final Account sa = new Account(
-//                "id-0000",
-//                "sa",
-//                "Super Admin1",
-//                "sa@test.com",
-//                "password",
-//                "SUPER_ADMIN"
-//            );
             final Account sa = Account.builder()
                 .id("id-0000")
                 .username("sa")

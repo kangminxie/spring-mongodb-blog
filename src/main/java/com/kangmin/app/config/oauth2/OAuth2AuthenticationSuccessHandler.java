@@ -58,7 +58,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             System.out.println("****" + redirectUri.get());
-            throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
+            throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI"
+                + " and can't proceed with the authentication");
         }
 
         final String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
@@ -84,9 +85,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .stream()
                 .anyMatch(authorizedRedirectUri -> {
                     // Only validate host and port. Let the clients use different paths if they want to
-                    URI authorizedURI = URI.create(authorizedRedirectUri);
-                    return authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                            && authorizedURI.getPort() == clientRedirectUri.getPort();
+                    final URI authorizedUri = URI.create(authorizedRedirectUri);
+                    return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
+                            && authorizedUri.getPort() == clientRedirectUri.getPort();
                 });
     }
 
