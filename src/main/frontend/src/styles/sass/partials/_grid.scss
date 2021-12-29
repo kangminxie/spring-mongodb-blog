@@ -1,0 +1,13 @@
+@import './helper';
+
+@mixin full-row {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: none;
+  margin: 0;
+}
+
+@mixin app-common-header {
+  @include full-row;
+  padding: rem(16) rem(32);
+}

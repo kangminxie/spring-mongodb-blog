@@ -77,8 +77,14 @@ task appNpmBuild(type: NpmTask) {
 	args = ["run", "build"]
 }
 
+task copyFrontend(type: Copy) {
+	from 'src/main/frontend/build'
+	into 'build/resources/main/static/.'
+}
+
 appNpmBuild.dependsOn appNpmInstall
-// compileJava.dependsOn appNpmBuild
+copyFrontend.dependsOn appNpmBuild
+compileJava.dependsOn copyFrontend
 
 node {
 	version = '13.8.0'

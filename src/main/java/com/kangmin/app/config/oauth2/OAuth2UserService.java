@@ -29,11 +29,11 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(
-        final OAuth2UserRequest oAuth2UserRequest
+        final OAuth2UserRequest oauth2UserRequest
     ) throws OAuth2AuthenticationException {
-        final OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+        final OAuth2User oAuth2User = super.loadUser(oauth2UserRequest);
         try {
-            return processOAuth2User(oAuth2UserRequest, oAuth2User);
+            return processOAuth2User(oauth2UserRequest, oAuth2User);
         } catch (final AuthenticationException ex) {
             throw ex;
         } catch (final Exception ex) {
@@ -43,12 +43,12 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private OAuth2User processOAuth2User(
-        final OAuth2UserRequest oAuth2UserRequest,
-        final OAuth2User oAuth2User
+        final OAuth2UserRequest oauth2UserRequest,
+        final OAuth2User oauth2User
     ) {
         final OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(
-                oAuth2UserRequest.getClientRegistration().getRegistrationId(),
-                oAuth2User.getAttributes()
+                oauth2UserRequest.getClientRegistration().getRegistrationId(),
+                oauth2User.getAttributes()
         );
 
         if (ObjectUtils.isEmpty(oAuth2UserInfo.getEmail())) {
@@ -59,32 +59,34 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         Account account;
         if (accountOpt.isPresent()) {
             account = accountOpt.get();
-            if (!account.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase()))) {
+            if (!account.getProvider().equals(
+                AuthProvider.valueOf(oauth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase()))
+            ) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with "
                         + account.getProvider() + " account. Please use your " + account.getProvider()
                         + " account to login.");
             }
             account = updateExistingUser(account, oAuth2UserInfo);
         } else {
-            account = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
+            account = registerNewUser(oauth2UserRequest, oAuth2UserInfo);
         }
 
-        return OAuth2UserPrincipal.create(account, oAuth2User.getAttributes());
+        return OAuth2UserPrincipal.create(account, oauth2User.getAttributes());
     }
 
     private Account registerNewUser(
-        final OAuth2UserRequest oAuth2UserRequest,
-        final OAuth2UserInfo oAuth2UserInfo
+        final OAuth2UserRequest oauth2UserRequest,
+        final OAuth2UserInfo oauth2UserInfo
     ) {
-        Account user = new Account();
-        final String gid = oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase();
+        final Account user = new Account();
+        final String gid = oauth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase();
         System.out.println("### gid is: " + gid);
         user.setProvider(AuthProvider.valueOf(gid));
-        user.setProviderId(oAuth2UserInfo.getId()); // (google sub) 103540028556894457296
+        user.setProviderId(oauth2UserInfo.getId()); // (google sub) 103540028556894457296
         user.setId(UUID.randomUUID().toString());
-        user.setUsername(oAuth2UserInfo.getEmail()); // same as email
-        user.setDisplayName(oAuth2UserInfo.getName());
-        user.setEmail(oAuth2UserInfo.getEmail());
+        user.setUsername(oauth2UserInfo.getEmail()); // same as email
+        user.setDisplayName(oauth2UserInfo.getName());
+        user.setEmail(oauth2UserInfo.getEmail());
         // user.setImageUrl(oAuth2UserInfo.getImageUrl());
         user.setRole("NORMAL");
         user.setCreatedTimestamp(System.currentTimeMillis());
@@ -93,9 +95,9 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     private Account updateExistingUser(
         final Account existingUser,
-        final OAuth2UserInfo oAuth2UserInfo
+        final OAuth2UserInfo oauth2UserInfo
     ) {
-        existingUser.setDisplayName(oAuth2UserInfo.getName());
+        existingUser.setDisplayName(oauth2UserInfo.getName());
         // existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
         return accountDao.save(existingUser);
     }

@@ -1,0 +1,19 @@
+@import 'src/styles/sass/partials/color';
+
+#admin-side-menu {
+  background: $side_menu_bg_color;
+  text-align: left;
+  width: 240px;
+  min-width: 200px;
+  min-height: 88vh;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+
+  .greeting {
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    text-align: center;
+  }
+}

@@ -1,0 +1,14 @@
+@import '../../styles/sass/v1Assets';
+
+.my-footer {
+  background-color: $v1-footer-background;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  // font-size: calc(10px + 2vmin);
+  // color: white;
+  // margin-top: auto;
+  position: absolute;
+  width: 100%;
+  margin: 0;
+}

@@ -1,0 +1,8 @@
+.accordion .card-header:after {
+  float: right;
+}
+
+.accordion .card-header[aria-expanded='true']:after {
+  /* symbol for "collapsed" panels */
+  content: '-';
+}

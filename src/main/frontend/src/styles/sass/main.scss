@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+@import './_reset';
+@import 'partials/color';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: $body_bg_color;
+  margin: 0;
+}

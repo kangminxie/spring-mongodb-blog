@@ -11,7 +11,7 @@ public class IndexController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
-    @RequestMapping(value = "/oauth2/redirect")
+    @RequestMapping(value = "/oauth2/callback/**")
     public String oauth2Redirect() {
         LOGGER.info("ForwardingController `/oauth2/redirect` path visited and got redirected to /");
         return "forward:/";
