@@ -1,6 +1,6 @@
 // jwt and security related
-const DEV_BASE_URL = "localhost:8080";
-const PROD_BASE_URL = "https://afternoon-shore-94848.herokuapp.com";
+// const DEV_BASE_URL = "localhost:8080";
+// const PROD_BASE_URL = "https://afternoon-shore-94848.herokuapp.com";
 
 const JWT_TOKEN = 'JWT_TOKEN';
 const BACKEND_OAUTH2_AUTHORIZE_BASE = 'http://localhost:8080/oauth2/authorize';

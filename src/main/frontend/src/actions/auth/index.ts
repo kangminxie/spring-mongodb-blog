@@ -78,7 +78,7 @@ export const handleLoginRequest = (request: LoginRequest) => {
           })
         );
       } else {
-        const { message } = response.data;
+        // const { message } = response.data;
         // dispatch(notifyUser(NotifyLevel.ERROR, message));
       }
     } catch (error) {
